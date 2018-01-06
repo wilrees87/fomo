@@ -1,0 +1,6 @@
+<div id="events-container" *ngIf="items.length > 0" [@slideInOut]>
+<div *ngFor="let item of items | distance: 'distance' " class="event-line" (click)="targetHere(item.lat, item.long)">
+  <img [src]='item.marker' alt="marker" /><h4> {{item.title}} - {{item.venue}} - {{item.distance | number: '1.2-2'}}km</h4>
+  <p>{{item.date}}</p>
+</div>
+</div>

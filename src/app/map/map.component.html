@@ -1,0 +1,33 @@
+
+
+<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [minZoom]="14" [maxZoom]="16" (boundsChange)="onBoundsChanged($event)" (zoomChange)="onZoomChanged($event)">
+
+
+    <!--  <agm-marker-cluster [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'"> -->
+    <agm-marker
+              *ngFor="let m of items"
+              [latitude]="m.lat"
+              [longitude]="m.long"
+              [iconUrl]="m.marker"
+              (markerClick)="markerSelected(m.lat, m.long)"
+              ></agm-marker>
+
+
+               <agm-marker
+                       [latitude]="crosslat"
+                       [longitude]="long"
+                       [iconUrl]="'/assets/crosshairs.svg'"
+                       (click)="onUpdate()"
+                       ></agm-marker>
+</agm-map>
+
+<div class="search-card">
+  <!--<div id="search-title">
+    Find Tweets and Events
+  </div>-->
+<div class="form-group">
+    <input placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl" size="100">
+  </div>
+</div>
+  <button *ngIf="showUpdate" type="submit" class="btn btn-default" (click)="onUpdate()">Search Here <i class="fa fa-refresh"></i></button>
+<app-events *ngIf="items" [items]="items" (targetSelected)="targetSelected($event)"></app-events>
