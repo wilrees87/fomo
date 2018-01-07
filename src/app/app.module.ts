@@ -10,7 +10,6 @@ import { AgmCoreModule } from '@agm/core';
 import { TweetsService} from './tweets.service';
 import { AuthenticateService} from './authenticate.service';
 import { EventsService} from './events.service';
-import { ItemsService} from './items.service';
 import { MapComponent } from './map/map.component';
 import { EventsComponent } from './events/events.component';
 
@@ -35,12 +34,12 @@ import { DistancePipe } from './distance.pipe';
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDDEW9pD0K6S3orttT4k_xhLmg1mM9PQgI',
-      libraries: ["places"]
+      libraries: ['places']
     }),
     AgmJsMarkerClustererModule,
     HttpClientModule
   ],
-  providers: [TweetsService, AuthenticateService, EventsService, ItemsService],
+  providers: [TweetsService, AuthenticateService, EventsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,15 +1,15 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public innerWidth: any;
   public innerHeight: any;
 
- title: string = "FOMO Live";
+ title = 'FOMO Live';
 
 
   constructor() { }

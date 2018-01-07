@@ -9,17 +9,16 @@ const httpOptions = {
 
 @Injectable()
 export class EventsService {
-APIurl = 'http://localhost:3000/events';
+  APIurl = 'http://localhost:3000/events';
 
   constructor(private http: HttpClient) { }
 
-  getEvents(lon: number, lat: number, dis:number): Observable<any> {
-    let searchterm = {
+  getEvents(lon: number, lat: number, dis: number): Observable<any> {
+    const searchterm = {
       lon: lon,
       lat: lat,
       dis: dis
-    }
-    return this.http.post(this.APIurl, searchterm, httpOptions)
     };
-
+    return this.http.post(this.APIurl, searchterm, httpOptions);
+  }
 }

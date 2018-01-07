@@ -14,11 +14,10 @@ export class AuthenticateService {
 
   authenticate() {
     return this.http.post(this.APIurl, httpOptions).subscribe(suc => {
-            console.log(suc);
-        },
-        err => {
-            console.log(err );
-        });
-    };
-
+      console.log(suc);
+    },
+      err => {
+        console.log(err);
+      });
   }
+}

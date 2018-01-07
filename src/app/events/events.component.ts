@@ -8,7 +8,7 @@ import { Item } from '../item';
   selector: 'app-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css'],
-  //adapted from https://stackoverflow.com/questions/47248898/angular-4-simple-example-of-slide-in-out-animation-on-ngif
+  // adapted from https://stackoverflow.com/questions/47248898/angular-4-simple-example-of-slide-in-out-animation-on-ngif
   animations: [
   trigger('slideInOut', [
     transition(':enter', [
@@ -29,7 +29,7 @@ export class EventsComponent implements OnInit {
 
   constructor() { }
 
-  private targetHere(lat: number, long: number): void{
+  private targetHere(lat: number, long: number): void {
     this.targetSelected.emit({lat, long});
   }
 

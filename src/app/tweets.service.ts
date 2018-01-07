@@ -9,18 +9,18 @@ const httpOptions = {
 
 @Injectable()
 export class TweetsService {
-APIurl = 'http://localhost:3000/search';
+  APIurl = 'http://localhost:3000/search';
 
   constructor(private http: HttpClient) { }
 
-  getTweets(long: number, lat: number, dis: number):Observable<any> {
+  getTweets(long: number, lat: number, dis: number): Observable<any> {
     console.log(long);
-    let searchterm = {
+    const searchterm = {
       long: long,
       lat: lat,
       dis: dis
-    }
-    return this.http.post(this.APIurl, searchterm, httpOptions)
     };
+    return this.http.post(this.APIurl, searchterm, httpOptions);
+  }
 
 }
