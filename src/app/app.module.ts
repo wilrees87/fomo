@@ -7,17 +7,16 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AgmCoreModule } from '@agm/core';
-import { TweetsService} from './tweets.service';
-import { AuthenticateService} from './authenticate.service';
-import { EventsService} from './events.service';
+import { TweetsService } from './tweets.service';
+import { AuthenticateService } from './authenticate.service';
+import { EventsService } from './events.service';
 import { MapComponent } from './map/map.component';
 import { EventsComponent } from './events/events.component';
 
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
+// custom distance pipe used in listing items to order by closest
 import { DistancePipe } from './distance.pipe';
-
-
 
 @NgModule({
   declarations: [

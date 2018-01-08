@@ -9,10 +9,11 @@ const httpOptions = {
 
 @Injectable()
 export class EventsService {
+
+  // server side function (hosted at heroku) used to protect tokens, keys and secrets
   APIurl1 = 'https://immense-scrubland-79733.herokuapp.com/events';
   APIurl2 = 'https://immense-scrubland-79733.herokuapp.com/more-events';
-//APIurl1  = 'http://localhost:8080/events';
-//APIurl2  = 'http://localhost:8080/more-events';
+
 
   constructor(private http: HttpClient) { }
   getEvents(lon: number, lat: number, dis: number): Observable<any> {

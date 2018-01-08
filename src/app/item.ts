@@ -1,3 +1,4 @@
+//item interface to standardise API response
 export interface Item {
   title: string;
   date: string;
@@ -7,5 +8,5 @@ export interface Item {
   long: number;
   type: string;
   marker: string;
-  url ?: string;
+  url?: string;
 }

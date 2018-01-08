@@ -1,43 +1,39 @@
-
-
+<!-- agm-map from agm angular module -->
 <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [minZoom]="14" [maxZoom]="16" (boundsChange)="onBoundsChanged($event)" (zoomChange)="onZoomChanged($event)">
-
-
-    <!--  <agm-marker-cluster [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'"> -->
-    <agm-marker
-              *ngFor="let m of items"
-              [latitude]="m.lat"
-              [longitude]="m.long"
-              [iconUrl]="m.marker"
-              (markerClick)="markerSelected(m.lat, m.long)"
-              ></agm-marker>
-
-
-               <agm-marker
-                       [latitude]="crosslat"
-                       [longitude]="long"
-                       [iconUrl]="'assets/crosshairs.svg'"
-                       (click)="onUpdate()"
-                       ></agm-marker>
+  <agm-marker *ngFor="let m of items" [latitude]="m.lat" [longitude]="m.long" [iconUrl]="m.marker" (markerClick)="markerSelected(m.lat, m.long)"></agm-marker> <!-- item marker -->
+  <agm-marker [latitude]="crosslat" [longitude]="long" [iconUrl]="'assets/crosshairs.svg'" (click)="onUpdate()"></agm-marker> <!-- centre marker -->
 </agm-map>
 
+<!-- googlemaps autocomplete box, width amended for screen size -->
 <div class="search-card" [style.width.px]="searchWidth">
-<div class="form-group">
+  <div class="form-group">
     <input placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl" size="100">
   </div>
 </div>
 
+<!-- update map button - gets data -->
 <button *ngIf="showUpdate" type="submit" class="btn btn-update" (click)="onUpdate()">{{updateText}} <i class="fa fa-refresh"></i></button>
 
+<!-- sets html5 geolocation -->
 <button *ngIf="current_address && innerHeight > 500" [style.width.px]="searchWidth" type="submit" class="btn-current" (click)="goCurrent()">Go to {{current_address.address}} <i class="fa fa-arrow-right"></i></button>
 
+<!-- fault notification -->
 <div *ngIf="fault.twitter || fault.events" [style.width.px]="searchWidth" type="submit" class="fault-alert" (click)="dismissFault()">
   <p *ngIf="fault.twitter">{{fault.twitter}} <i class="fa fa-exclamation-triangle"></i></p>
-<p *ngIf="fault.events">{{fault.events}} <i class="fa fa-exclamation-triangle"></i></p></div>
+  <p *ngIf="fault.events">{{fault.events}} <i class="fa fa-exclamation-triangle"></i></p>
+</div>
 
+<!-- blank data alert -->
+<div *ngIf="alert && items.length == 0 && !fault.twitter && !fault.events" id="alert">
+  <h1>Nothing to Fear Here</h1>
+  <p>Search Elsewhere On The Map</p>
+</div>
 
+<!-- blank data and fault alert -->
+<div *ngIf="items.length == 0 && fault.twitter && fault.events" id="alert">
+  <h1>Apologies we have a fault.</h1>
+  <p>Please check back later.</p>
+</div>
 
-<div *ngIf="alert && items.length == 0 && !fault.twitter && !fault.events" id="alert"><h1>Nothing to Fear Here</h1><p>Search Elsewhere On The Map</p></div>
-<div *ngIf="items.length == 0 && fault.twitter && fault.events" id="alert"><h1>Apologies we have a fault.</h1><p>Please check back later.</p></div>
-
+<!-- events component -->
 <app-events [items]="items" (targetSelected)="targetSelected($event)"></app-events>

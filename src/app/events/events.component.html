@@ -1,25 +1,25 @@
-
-<!--<button *ngIf="minMax && innerWidth > 800" id="maximise-large" (click)="minMaxSwitch()"><i class="fa fa-angle-right" aria-hidden="true"></i> </button>
-<button *ngIf="!minMax && innerWidth > 800" id="minimise-large" (click)="minMaxSwitch()"><i class="fa fa-angle-left" aria-hidden="true"></i></button>-->
+<!-- Item list display when screen is larger than 799 -->
 <div id="events-wrapper-large" *ngIf="items.length > 0 && innerWidth > 799 && !minMax" [@slideInOut]>
-<div id="events-container-large">
-<div *ngFor="let item of items | distance: 'distance' " class="event-line" (click)="targetHere(item.lat, item.long)">
-  <img [src]='item.marker' alt="marker" /><h4> {{item.title}} - {{item.venue}} - {{item.distance | number: '1.2-2'}}km</h4>
-  <p>{{item.date}}</p>
-  <p *ngIf="item.url" class="link"><a target="_blank" [href]="item.url" >View <i class="fa fa-arrow-right"></i></a></p>
-</div>
-</div>
+  <div id="events-container-large">
+    <div *ngFor="let item of items | distance: 'distance' " class="event-line" (click)="targetHere(item.lat, item.long)">
+      <img [src]='item.marker' alt="marker" />
+      <h4> {{item.title}} - {{item.venue}} - {{item.distance | number: '1.2-2'}}km</h4>
+      <p>{{item.date}}</p>
+      <p *ngIf="item.url" class="link"><a target="_blank" [href]="item.url">View <i class="fa fa-arrow-right"></i></a></p>
+    </div>
+  </div>
 </div>
 
-
+<!-- Item list display when screen is smaller than 799 -->
 <button *ngIf="minMax && innerWidth < 800" id="maximise-small" (click)="minMaxSwitch()"><i class="fa fa-angle-up" aria-hidden="true"></i> </button>
 <div id="events-wrapper-small" *ngIf="items.length > 0 && innerWidth < 800 && !minMax" [@slideDownOut]>
-<div id="events-container-small">
-  <button id="minimise-small" (click)="minMaxSwitch()"> <i class="fa fa-angle-down" aria-hidden="true"></i></button>
-<div *ngFor="let item of items | distance: 'distance' " class="event-line" (click)="targetHere(item.lat, item.long)">
-  <img [src]='item.marker' alt="marker" /><h4> {{item.title}} - {{item.venue}} - {{item.distance | number: '1.2-2'}}km</h4>
-  <p>{{item.date}}</p>
-  <p *ngIf="item.url" class="link" ><a target="_blank" [href]="item.url" >View <i class="fa fa-arrow-right"></i></a></p>
-</div>
-</div>
+  <div id="events-container-small">
+    <button id="minimise-small" (click)="minMaxSwitch()"> <i class="fa fa-angle-down" aria-hidden="true"></i></button>
+    <div *ngFor="let item of items | distance: 'distance' " class="event-line" (click)="targetHere(item.lat, item.long)">
+      <img [src]='item.marker' alt="marker" />
+      <h4> {{item.title}} - {{item.venue}} - {{item.distance | number: '1.2-2'}}km</h4>
+      <p>{{item.date}}</p>
+      <p *ngIf="item.url" class="link"><a target="_blank" [href]="item.url">View <i class="fa fa-arrow-right"></i></a></p>
+    </div>
+  </div>
 </div>

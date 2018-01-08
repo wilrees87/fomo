@@ -8,14 +8,14 @@ const httpOptions = {
 @Injectable()
 export class AuthenticateService {
 
+  // server side function (hosted at heroku) used to protect tokens, keys and secrets
   APIurl = 'https://immense-scrubland-79733.herokuapp.com/authorize';
-//APIurl = 'http://localhost:8080/authorize';
 
   constructor(private http: HttpClient) { }
 
   authenticate() {
     return this.http.post(this.APIurl, httpOptions).subscribe(suc => {
-      console.log("Welcome to FOMO Live");
+      console.log("Welcome to FOMO Live"); //auth message
     },
       err => {
         console.log(err);

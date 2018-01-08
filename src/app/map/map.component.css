@@ -1,3 +1,5 @@
+/* fill screen up to margin with map */
+
 agm-map {
   height: 100%;
   width: 100%;
@@ -6,22 +8,24 @@ agm-map {
   left: 0px;
 }
 
+/* fix autocomplete box top right */
+
 .search-card {
   position: absolute;
   top: 0px;
-  right:0px;
+  right: 0px;
   margin: 10px 10px 0 0;
-    border-radius: 2px 0 0 2px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    background:rgba(0,0,0,0.2);
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .form-group {
   padding: 12px 12px;
-display: inline-block;
+  display: inline-block;
 }
 
 .form-control {
@@ -29,18 +33,18 @@ display: inline-block;
   -moz-box-sizing: border-box;
   display: inline-block;
   padding: 6px;
-    width: 100%;
+  width: 100%;
   background-color: #fff;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.42857143;
-
-    text-overflow: ellipsis;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    vertical-align: middle;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.42857143;
+  text-overflow: ellipsis;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  vertical-align: middle;
 }
 
+/* fix in centre of screen above crosshairs*/
 
 .btn-update {
   padding: 6px 12px;
@@ -62,15 +66,15 @@ display: inline-block;
   border: 1px solid transparent;
   border-radius: 4px;
   color: #fff;
-    background:rgba(0,0,0,0.6);
-    border-color: #ccc;
-    position: absolute;
-    top: 40%;
-        left: 50%;
-          transform: translate(-60%, -50%);
-
+  background: rgba(0, 0, 0, 0.6);
+  border-color: #ccc;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-60%, -50%);
 }
 
+/* below autocomplete */
 
 .btn-current {
   padding: 2px 4px;
@@ -88,15 +92,16 @@ display: inline-block;
   border: 1px solid transparent;
   border-radius: 4px;
   color: #fff;
-  background:rgba(0,0,0,0.2);
-    border-color: #ccc;
-    position: absolute;
-    top: 75px;
-    right: 10px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-
+  background: rgba(0, 0, 0, 0.2);
+  border-color: #ccc;
+  position: absolute;
+  top: 75px;
+  right: 10px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
+
+/* below current */
 
 .fault-alert {
   padding: 2px 4px;
@@ -114,29 +119,32 @@ display: inline-block;
   border: 1px solid transparent;
   border-radius: 4px;
   color: #fff;
-  background:rgba(0,0,0,0.2);
-    border-color: #ccc;
-    position: absolute;
-    top: 100px;
-    right: 10px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-
+  background: rgba(0, 0, 0, 0.2);
+  border-color: #ccc;
+  position: absolute;
+  top: 100px;
+  right: 10px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
+
+/* hover for all buttons */
 
 .btn:hover {
-  background:rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.8);
 }
 
+/* below current location button */
+
 #alert {
-  position:absolute;
+  position: absolute;
   top: 50%;
-      left: 50%;
-        transform: translate(-50%, -50%);
-        background:rgba(252,252,252,0.9);
-        text-align: center;
-        border-radius: 4px;
-        padding: 25px 6px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(252, 252, 252, 0.9);
+  text-align: center;
+  border-radius: 4px;
+  padding: 25px 6px;
 }
 
 #alert p {

@@ -9,8 +9,9 @@ const httpOptions = {
 
 @Injectable()
 export class TweetsService {
+
+  // server side function (hosted at heroku) used to protect tokens, keys and secrets
   APIurl = 'https://immense-scrubland-79733.herokuapp.com/search';
-  //APIurl = 'http://localhost:8080/search';
 
   constructor(private http: HttpClient) { }
 

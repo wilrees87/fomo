@@ -1,14 +1,18 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div id="wrapper">
-
-  <div class="header" [style.width.px]="innerWidth"><p><i class="fa fa-map-pin"></i> {{title}}</p></div>
-  <div class="footer" [style.width.px]="innerWidth"><h1><i class="fa fa-map-pin"></i> {{title}} / </h1>
+  <!-- element widths set by window width -->
+  <div class="header" [style.width.px]="innerWidth">
+    <p><i class="fa fa-map-pin"></i> {{title}}</p>
+  </div>
+  <div class="footer" [style.width.px]="innerWidth">
+    <h1><i class="fa fa-map-pin"></i> {{title}} / </h1>
     <div>
-  <p>Nearby Tweets and Events</p>
-<p>Fear Missing Out</p></div></div>
-
-<div id="main" [style.width.px]="innerWidth" [style.height.px]="innerHeight">
-  <app-map [style.width.px]="innerWidth" ></app-map>
-</div>
+      <p>Nearby Tweets and Events</p>
+      <p>Fear Missing Out</p>
+    </div>
+  </div>
+  <!-- element widths set by window width -->
+  <div id="main" [style.width.px]="innerWidth" [style.height.px]="innerHeight">
+    <app-map [style.width.px]="innerWidth"></app-map>
+  </div>
 
 </div>
