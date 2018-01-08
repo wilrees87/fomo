@@ -92,7 +92,7 @@ agm-map {
   border: 1px solid transparent;
   border-radius: 4px;
   color: #fff;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.6);
   border-color: #ccc;
   position: absolute;
   top: 75px;
@@ -119,7 +119,7 @@ agm-map {
   border: 1px solid transparent;
   border-radius: 4px;
   color: #fff;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.6);
   border-color: #ccc;
   position: absolute;
   top: 100px;
@@ -130,8 +130,8 @@ agm-map {
 
 /* hover for all buttons */
 
-.btn:hover {
-  background: rgba(0, 0, 0, 0.8);
+.btn:hover, .btn-current:hover, .fault-alert:hover {
+  background: rgba(0, 0, 0, 1);
 }
 
 /* below current location button */
