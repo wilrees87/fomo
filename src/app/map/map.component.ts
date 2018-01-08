@@ -1,6 +1,6 @@
 // https://github.com/juniormayhe/angular4/tree/master/angular4-maps-agm
 
-import { Component, OnInit, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, NgZone, ViewChild, Input, HostListener } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { } from '@types/googlemaps';
@@ -33,17 +33,49 @@ export class MapComponent implements OnInit {
   public zoom: number;
   public formatted_address: string;
   public showUpdate: boolean;
-  items: Item[] = [];
+  public items: Item[] = [];
+  public current_address: any;
+  public searchWidth: number;
+  public innerHeight: number;
+  public updateText: string;
+  public alert: boolean;
+  public fault = {events: '', twitter: ''};
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
 
+  @HostListener('window:resize', ['$event']) onResize(event: Event) {
+    if(window.innerWidth > 1200) {
+    this.searchWidth = window.innerWidth / 3;
+  } else if (window.innerWidth > 800) {
+    this.searchWidth = window.innerWidth / 2;
+  } else {
+    this.searchWidth = window.innerWidth - 60;
+  }
+  this.innerHeight = window.innerHeight;
+}
+
   constructor(private tweetsService: TweetsService, private eventsService: EventsService,
     private authenticateService: AuthenticateService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) { }
 
 
+dismissFault(): void {
+  this.fault = {events: '', twitter: ''};
+}
+
   ngOnInit() {
+
+    this.updateText = "Search Here";
+
+    if(window.innerWidth > 1200) {
+    this.searchWidth = window.innerWidth / 3;
+  } else if (window.innerWidth > 800) {
+    this.searchWidth = window.innerWidth / 2;
+  } else {
+    this.searchWidth = window.innerWidth - 60;
+  }
+  this.innerHeight = window.innerHeight;
 
     this.showUpdate = true;
 
@@ -96,6 +128,8 @@ export class MapComponent implements OnInit {
   onBoundsChanged(bounds): void {
 
     this.showUpdate = true;
+    this.alert = false;
+
     // https://stackoverflow.com/questions/3525670/radius-of-viewable-region-in-google-maps-v3
     const center = bounds.getCenter();
     const ne = bounds.getNorthEast();
@@ -156,21 +190,68 @@ export class MapComponent implements OnInit {
 
 
   onUpdate(): void {
+    this.items = [];
     this.getItems(this.long, this.lat, this.radius);
+    this.updateText = "Update Map";
   }
 
+  getMoreEvents(url: string, lon: number, lat: number): void {
+  this.eventsService.getMoreEvents(url).subscribe(
+    res=> {
+      if(res['data']['fault']){
+        console.log(res['data']['fault']['faultstring']);
+      } else {
+        if (res['data']['_links']['next']) {
+          this.getMoreEvents(res['data']['_links']['next']['href'], lon, lat);
+        };
+      res['data']['_embedded']['events'].forEach((item, index) => {
+        const distance = this.updateItemDis(item._embedded.venues[0].location.longitude,
+          item._embedded.venues[0].location.latitude, lon, lat);
+        const date = new Date(item.dates.start.dateTime).toString().replace('+0000 (GMT)', '');
+        if(item.url){
+        this.items.push({
+          title: item.name,
+          date: date,
+          distance: distance,
+          venue: item._embedded.venues[0].name,
+          lat: Number(item._embedded.venues[0].location.latitude),
+          long: Number(item._embedded.venues[0].location.longitude),
+          type: 'event',
+          marker: String('assets/bullseye.svg'),
+          url: item.url
+        });
+      }else{
+        this.items.push({
+          title: item.name,
+          date: date,
+          distance: distance,
+          venue: item._embedded.venues[0].name,
+          lat: Number(item._embedded.venues[0].location.latitude),
+          long: Number(item._embedded.venues[0].location.longitude),
+          type: 'event',
+          marker: String('assets/bullseye.svg')
+        })
+        }
+      });
+      }
+    }
+  )
+}
 
   getItems(lon, lat, dis): void {
-    // Observable.forkJoin(this.eventsService.getEvents(lon, lat, dis), this.tweetsService.getTweets(lat, lon, dis)).subscribe(
-    Observable.forkJoin(this.eventsService.getEvents(lon, lat, dis)).subscribe(
+    Observable.forkJoin(this.eventsService.getEvents(lon, lat, dis), this.tweetsService.getTweets(lat, lon, dis)).subscribe(
+    //Observable.forkJoin(this.eventsService.getEvents(lon, lat, dis)).subscribe(
       res => {
         this.showUpdate = false;
-        if (res[0]['data']['_embedded']) {
-          this.items = [];
+        if (res[0]['data']['page']['totalElements'] > 0) {
+          if (res[0]['data']['_links']['next']) {
+            this.getMoreEvents(res[0]['data']['_links']['next']['href'], lon, lat);
+          };
           res[0]['data']['_embedded']['events'].forEach((item, index) => {
             const distance = this.updateItemDis(item._embedded.venues[0].location.longitude,
               item._embedded.venues[0].location.latitude, lon, lat);
             const date = new Date(item.dates.start.dateTime).toString().replace('+0000 (GMT)', '');
+            if(item.url){
             this.items.push({
               title: item.name,
               date: date,
@@ -179,33 +260,67 @@ export class MapComponent implements OnInit {
               lat: Number(item._embedded.venues[0].location.latitude),
               long: Number(item._embedded.venues[0].location.longitude),
               type: 'event',
-              marker: String('/assets/bullseye.svg')
+              marker: String('assets/bullseye.svg'),
+              url: item.url
             });
+          }else{
+            this.items.push({
+              title: item.name,
+              date: date,
+              distance: distance,
+              venue: item._embedded.venues[0].name,
+              lat: Number(item._embedded.venues[0].location.latitude),
+              long: Number(item._embedded.venues[0].location.longitude),
+              type: 'event',
+              marker: String('assets/bullseye.svg')
+            })
+            }
           });
-        } else if (!res[0]['data']['_embedded']) {
-          console.log(res[0]);
+        } else if (res[0]['data']['page']['totalElements'] == 0) {
+          this.alert = true;
+          console.log("No events in area");
+        } else if(res['data']['fault']){
+          console.log(res['data']['fault']['faultstring']);
+          this.fault.events = 'No Events are Being displayed due to an error.';
         }
 
 
         if (res[1]['data']) {
+          if(res[1]['data']['error']){
+            console.log(res[1]['data']['error']['message']);
+            this.fault.twitter = 'No Tweets are Being displayed due to an error.';
+          } else {
           res[1]['data']['results'].forEach((item, index) => {
             if (item.geo) {
               const distance = this.updateItemDis(item.geo.coordinates[0], item.geo.coordinates[1], lat, lon);
               const date = new Date(item.created_at).toString().replace('+0000 ', '');
-              console.log(date);
-              this.items.push({
-                date: item.created_at,
-                lat: item.geo.coordinates[0],
-                long: item.geo.coordinates[1],
-                distance: distance,
-                title: item.text,
-                venue: item.user.screen_name,
-                type: 'tweet',
-                marker: '/assets/twitter.svg'
-              });
-
+              if(item.entities.urls[0]){
+                this.items.push({
+                  date: item.created_at,
+                  lat: item.geo.coordinates[0],
+                  long: item.geo.coordinates[1],
+                  distance: distance,
+                  title: item.text,
+                  venue: item.user.screen_name,
+                  type: 'tweet',
+                  marker: 'assets/twitter.svg',
+                  url: item.entities.urls[0].url
+                });
+              } else {
+                this.items.push({
+                  date: item.created_at,
+                  lat: item.geo.coordinates[0],
+                  long: item.geo.coordinates[1],
+                  distance: distance,
+                  title: item.text,
+                  venue: item.user.screen_name,
+                  type: 'tweet',
+                  marker: 'assets/twitter.svg'
+                });
+              }
             }
           });
+        }
         } else if (!res[1]['data']) {
           console.log(res[1]);
         }
@@ -224,10 +339,24 @@ export class MapComponent implements OnInit {
   setCurrentPosition(): void {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
+        const geocoder = new google.maps.Geocoder;
+        const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
+        geocoder.geocode({ 'location': latlng }, (results, status) => {
+              if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0] != null) {
+                  this.ngZone.run(() => {
+                this.current_address = {address: results[0].formatted_address, lat: latlng.lat, lng: latlng.lng};
+              });
+              }
+              }
+              })
       });
     }
+  }
+
+  goCurrent(): void {
+    this.longitude = this.current_address.lng;
+    this.latitude = this.current_address.lat;
   }
 
 }

@@ -20,10 +20,9 @@ export class AppComponent implements OnInit {
     this.innerHeight = window.innerHeight - 100;
   }
 
-  @HostListener('window:resize', ['$event'])
-onResize(event) {
-  this.innerWidth = window.innerWidth - 60;
-  this.innerHeight = window.innerHeight - 100;
+  @HostListener('window:resize', ['$event']) onResize(event: Event) {
+    this.innerWidth = window.innerWidth - 40;
+    this.innerHeight = window.innerHeight - 100;
 }
 
 }

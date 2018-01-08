@@ -7,4 +7,5 @@ export interface Item {
   long: number;
   type: string;
   marker: string;
+  url ?: string;
 }

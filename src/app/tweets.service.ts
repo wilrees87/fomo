@@ -9,12 +9,12 @@ const httpOptions = {
 
 @Injectable()
 export class TweetsService {
-  APIurl = 'http://localhost:3000/search';
+  APIurl = 'https://immense-scrubland-79733.herokuapp.com/search';
+  //APIurl = 'http://localhost:8080/search';
 
   constructor(private http: HttpClient) { }
 
   getTweets(long: number, lat: number, dis: number): Observable<any> {
-    console.log(long);
     const searchterm = {
       long: long,
       lat: lat,

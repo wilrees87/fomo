@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, HostListener } from '@angular/core';
 import {trigger, style, animate, transition} from '@angular/animations';
 import { map } from 'rxjs/operators';
 
@@ -18,6 +18,15 @@ import { Item } from '../item';
     transition(':leave', [
       animate('200ms ease-in', style({transform: 'translateX(-100%)'}))
     ])
+  ]),
+  trigger('slideDownOut', [
+    transition(':enter', [
+      style({transform: 'translateY(100%)'}),
+      animate('200ms ease-in', style({transform: 'translateY(0%)'}))
+    ]),
+    transition(':leave', [
+      animate('200ms ease-in', style({transform: 'translateY(100%)'}))
+    ])
   ])
 ]
 
@@ -27,13 +36,28 @@ export class EventsComponent implements OnInit {
   @Output() targetSelected = new EventEmitter<any>();
     @Input() items: Item[];
 
+    public innerWidth: number;
+        public innerHeight: number;
+        public minMax: boolean;
+
   constructor() { }
 
   private targetHere(lat: number, long: number): void {
     this.targetSelected.emit({lat, long});
   }
 
-  ngOnInit() {
+  private minMaxSwitch(): void {
+    this.minMax = !this.minMax;
   }
+
+  ngOnInit() {
+    this.innerWidth = window.innerWidth - 40;
+    this.innerHeight = window.innerHeight - 100;
+  }
+
+  @HostListener('window:resize', ['$event']) onResize(event: Event) {
+    this.innerWidth = window.innerWidth - 40;
+    this.innerHeight = window.innerHeight - 100;
+}
 
 }

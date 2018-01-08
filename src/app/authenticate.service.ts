@@ -8,13 +8,14 @@ const httpOptions = {
 @Injectable()
 export class AuthenticateService {
 
-  APIurl = 'http://localhost:3000/authorize';
+  APIurl = 'https://immense-scrubland-79733.herokuapp.com/authorize';
+//APIurl = 'http://localhost:8080/authorize';
 
   constructor(private http: HttpClient) { }
 
   authenticate() {
     return this.http.post(this.APIurl, httpOptions).subscribe(suc => {
-      console.log(suc);
+      console.log("Welcome to FOMO Live");
     },
       err => {
         console.log(err);

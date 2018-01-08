@@ -16,18 +16,28 @@
                <agm-marker
                        [latitude]="crosslat"
                        [longitude]="long"
-                       [iconUrl]="'/assets/crosshairs.svg'"
+                       [iconUrl]="'assets/crosshairs.svg'"
                        (click)="onUpdate()"
                        ></agm-marker>
 </agm-map>
 
-<div class="search-card">
-  <!--<div id="search-title">
-    Find Tweets and Events
-  </div>-->
+<div class="search-card" [style.width.px]="searchWidth">
 <div class="form-group">
     <input placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl" size="100">
   </div>
 </div>
-  <button *ngIf="showUpdate" type="submit" class="btn btn-default" (click)="onUpdate()">Search Here <i class="fa fa-refresh"></i></button>
-<app-events *ngIf="items" [items]="items" (targetSelected)="targetSelected($event)"></app-events>
+
+<button *ngIf="showUpdate" type="submit" class="btn btn-update" (click)="onUpdate()">{{updateText}} <i class="fa fa-refresh"></i></button>
+
+<button *ngIf="current_address && innerHeight > 500" [style.width.px]="searchWidth" type="submit" class="btn-current" (click)="goCurrent()">Go to {{current_address.address}} <i class="fa fa-arrow-right"></i></button>
+
+<div *ngIf="fault.twitter || fault.events" [style.width.px]="searchWidth" type="submit" class="fault-alert" (click)="dismissFault()">
+  <p *ngIf="fault.twitter">{{fault.twitter}} <i class="fa fa-exclamation-triangle"></i></p>
+<p *ngIf="fault.events">{{fault.events}} <i class="fa fa-exclamation-triangle"></i></p></div>
+
+
+
+<div *ngIf="alert && items.length == 0 && !fault.twitter && !fault.events" id="alert"><h1>Nothing to Fear Here</h1><p>Search Elsewhere On The Map</p></div>
+<div *ngIf="items.length == 0 && fault.twitter && fault.events" id="alert"><h1>Apologies we have a fault.</h1><p>Please check back later.</p></div>
+
+<app-events [items]="items" (targetSelected)="targetSelected($event)"></app-events>
