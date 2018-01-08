@@ -10,7 +10,7 @@ import { Item } from '../item';
   styleUrls: ['./events.component.css'],
 
   // adapted from https://stackoverflow.com/questions/47248898/angular-4-simple-example-of-slide-in-out-animation-on-ngif
-  //slides in from left
+  // slides in from left
   animations: [
     trigger('slideInOut', [
       transition(':enter', [
@@ -21,7 +21,7 @@ import { Item } from '../item';
         animate('200ms ease-in', style({ transform: 'translateX(-100%)' }))
       ])
     ]),
-    //slides up from below
+    // slides up from below
     trigger('slideDownOut', [
       transition(':enter', [
         style({ transform: 'translateY(100%)' }),

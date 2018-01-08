@@ -1,4 +1,4 @@
-//item interface to standardise API response
+// item interface to standardise API response
 export interface Item {
   title: string;
   date: string;

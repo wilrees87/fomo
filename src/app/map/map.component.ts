@@ -42,7 +42,8 @@ export class MapComponent implements OnInit {
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
-  // listen for window resize, set three different breaks at 1200, 800 and below to format for different screen sizes (affects search box width)
+  /* listen for window resize, set three different breaks at 1200,
+   800 and below to format for different screen sizes (affects search box width) */
   @HostListener('window:resize', ['$event']) onResize(event: Event) {
     if (window.innerWidth > 1200) {
       this.searchWidth = window.innerWidth / 3;
@@ -64,7 +65,7 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     // set update button & language for first use
-    this.updateText = "Search Here";
+    this.updateText = 'Search Here';
     this.showUpdate = true;
 
     // initialize width/height variables
@@ -199,7 +200,7 @@ export class MapComponent implements OnInit {
   onUpdate(): void {
     this.items = [];
     this.getItems(this.long, this.lat, this.radius);
-    this.updateText = "Update Map";
+    this.updateText = 'Update Map';
   }
 
   // function to get second page of events via API call
@@ -211,7 +212,7 @@ export class MapComponent implements OnInit {
         } else {
           if (res['data']['_links']['next']) {
             this.getMoreEvents(res['data']['_links']['next']['href'], lon, lat); // go again if more pages
-          };
+          }
           res['data']['_embedded']['events'].forEach((item, index) => {
             const distance = this.updateItemDis(item._embedded.venues[0].location.longitude,
               item._embedded.venues[0].location.latitude, lon, lat); // update item distance from center
@@ -239,12 +240,12 @@ export class MapComponent implements OnInit {
                 long: Number(item._embedded.venues[0].location.longitude),
                 type: 'event',
                 marker: String('assets/bullseye.svg')
-              })
+              });
             }
           });
         }
       }
-    )
+    );
   }
 
   // function to get items from api call
@@ -256,7 +257,7 @@ export class MapComponent implements OnInit {
         if (res[0]['data']['page']['totalElements'] > 0) { // deal with events first
           if (res[0]['data']['_links']['next']) {
             this.getMoreEvents(res[0]['data']['_links']['next']['href'], lon, lat); // if paginated events
-          };
+          }
           res[0]['data']['_embedded']['events'].forEach((item, index) => {
             const distance = this.updateItemDis(item._embedded.venues[0].location.longitude,
               item._embedded.venues[0].location.latitude, lon, lat); // update item distance from center
@@ -284,10 +285,10 @@ export class MapComponent implements OnInit {
                 long: Number(item._embedded.venues[0].location.longitude),
                 type: 'event',
                 marker: String('assets/bullseye.svg')
-              })
+              });
             }
           });
-        } else if (res[0]['data']['page']['totalElements'] == 0) {
+        } else if (res[0]['data']['page']['totalElements'] === 0) {
           this.alert = true; // alert set if no events N.B only necessary for one or other of events or twitter
         } else if (res['data']['fault']) {
           console.log(res['data']['fault']['faultstring']); // log api error
@@ -300,7 +301,8 @@ export class MapComponent implements OnInit {
         } else {
           res[1]['data']['results'].forEach((item, index) => {
             if (item.geo) {
-              const distance = this.updateItemDis(item.geo.coordinates[0], item.geo.coordinates[1], lat, lon); // update item distance from center
+              const distance = this.updateItemDis(item.geo.coordinates[0],
+                item.geo.coordinates[1], lat, lon); // update item distance from center
               const date = new Date(item.created_at).toString().replace('+0000 ', ''); // standardise date
               // fit item to interface and push to array
               if (item.entities.urls[0]) {
@@ -349,14 +351,14 @@ export class MapComponent implements OnInit {
         const geocoder = new google.maps.Geocoder;
         const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
         geocoder.geocode({ 'location': latlng }, (results, status) => {
-          if (status == google.maps.GeocoderStatus.OK) {
+          if (status === google.maps.GeocoderStatus.OK) {
             if (results[0] != null) {
               this.ngZone.run(() => { // get back in angular zone
                 this.current_address = { address: results[0].formatted_address, lat: latlng.lat, lng: latlng.lng };
               });
             }
           }
-        })
+        });
       });
     }
   }

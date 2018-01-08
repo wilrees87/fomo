@@ -15,7 +15,7 @@ export class AuthenticateService {
 
   authenticate() {
     return this.http.post(this.APIurl, httpOptions).subscribe(suc => {
-      console.log("Welcome to FOMO Live"); //auth message
+      console.log('Welcome to FOMO Live'); // auth message
     },
       err => {
         console.log(err);

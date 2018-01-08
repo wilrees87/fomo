@@ -1,4 +1,5 @@
-//custom pipe to sort by distance for displaying events - help from https://stackoverflow.com/questions/46306725/angular2-numeric-orderby-pipe
+// custom pipe to sort by distance for displaying events
+// ideas from https://stackoverflow.com/questions/46306725/angular2-numeric-orderby-pipe
 
 import { Pipe, PipeTransform } from '@angular/core';
 

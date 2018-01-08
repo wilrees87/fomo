@@ -14,15 +14,15 @@ export class AppComponent implements OnInit {
 
   constructor() { }
 
-//get window dimension on initialisation and watch for changes
+// get window dimension on initialisation and watch for changes
   ngOnInit() {
-    this.innerWidth = window.innerWidth - 40; //create margin
-    this.innerHeight = window.innerHeight - 100; //create margin
+    this.innerWidth = window.innerWidth - 40; // create margin
+    this.innerHeight = window.innerHeight - 100; // create margin
   }
 
   @HostListener('window:resize', ['$event']) onResize(event: Event) {
-    this.innerWidth = window.innerWidth - 40; //create margin
-    this.innerHeight = window.innerHeight - 100; //create margin
+    this.innerWidth = window.innerWidth - 40; // create margin
+    this.innerHeight = window.innerHeight - 100; // create margin
   }
 
 }
